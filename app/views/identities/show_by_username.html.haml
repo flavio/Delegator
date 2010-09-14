@@ -1,0 +1,7 @@
+- content_for :head do
+  %link{:rel=>"openid.server", :href=> @identity.openid_server}
+  %link{:rel=>"openid.delegate", :href=> @identity.openid_delegate}
+  
+%h1
+  OpenId page of
+  = @identity.name

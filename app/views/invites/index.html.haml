@@ -1,0 +1,23 @@
+%h1 Invites
+- if @invites.empty?
+  %p No invite created yet.
+- else
+  %table.last
+    %thead
+      %tr
+        %th email
+        %th status
+    %tbody
+      - @invites.each do |invite|
+        %tr{:class => cycle("odd", "even")}
+          %td= link_to invite.email, :action => :show, :id => invite.id
+          %td
+            - if invite.invited?
+              Invited
+            - else
+              = link_to 'Invite', send_invitation_path(invite), :confirm => 'Send invitation?', :method => :post
+
+= will_paginate @invites
+
+
+= link_to "Create new invite", new_invite_url

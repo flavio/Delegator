@@ -1,0 +1,12 @@
+.success{:style=>"display:none;"}
+.error{:style=>"display:none;"}
+%div
+  - form_tag({}, :onsubmit => "return false;", :id => 'submit' ) do
+    %fieldset
+      %legend Add new identity
+      - fields_for :identity do |identity|
+        %label{:for=>"name"} Name:
+        = identity.text_field :name
+        %label{:for=>"openid_url"} Real openid:
+        = identity.text_field :openid_url
+      = submit_tag "Add"

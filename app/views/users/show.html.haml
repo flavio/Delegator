@@ -1,0 +1,82 @@
+%h1
+  Welcome
+  = @user.email
+
+#no_identities{:style => (@identities.empty? ? "" : "display:none;")}
+  %p You don't have any openid identity yet.
+
+%table#identities{:style => (@identities.empty? ? "display:none;" : "")}
+  %thead
+    %tr
+      %th Name
+      %th Real openid
+      %th Action
+  %tbody
+    - @identities.each do |identity|
+      %tr{:id => "tr_identity_#{identity.id}", :class => cycle("odd", "even")}
+        = render :partial => "identity_row", :layout => false, :locals => {:identity => identity}
+
+= will_paginate @identities
+
+= render :partial => "new_identity_form"
+
+:javascript
+  $(document).ready(function(){
+    $("form#submit").submit(function() {
+    // we want to store the values from the form input box, then send via ajax below
+    var url   = $('#identity_openid_url').attr('value');
+    var name = $('#identity_name').attr('value');
+    $.ajax({
+      type: "POST",
+      url: '#{url_for(:action => :add_identity)}',
+      data: {"identity[openid_url]" : url,
+             "identity[name]": name,
+             "user_id": #{@user.id},
+             "authenticity_token": '#{form_authenticity_token}'},
+      success: function(data){
+        if(data.status) {
+          $('div.success').html("Identity <em>" + name + "</em> has been added.");
+          $('div.success').fadeIn();
+          $('div.error').fadeOut();
+          $('#no_identities').fadeOut();
+          $('#identities').fadeIn();
+          $('#identities > tbody:last').append(data.html);
+        } else {
+          $('div.success').fadeOut();
+          $('div.error').html("<p>Identity has not been added:</p><ul>");
+          jQuery.each(data.errors, function(i,item){
+            $('div.error').append("<li>" + item[0] + " " + item[1] + "</li>");
+          });
+          $('div.error').append("</ul>");
+          $('div.error').fadeIn();
+        }
+      }
+    });
+    return false;
+    });
+  });
+
+  function delete_identity(identity_id) {
+    $.ajax({
+      type: "POST",
+      url: '#{url_for(:action => :del_identity)}',
+      data: {"id" : identity_id,
+             "authenticity_token": '#{form_authenticity_token}'},
+      success: function(data){
+        if(data.status) {
+          $('div.error').fadeOut();
+          $('div.success').html("Identity has been removed.");
+          $('div.success').fadeIn();
+          $('#tr_identity_'+identity_id).fadeOut().remove();
+          if ($("tr[id ^='tr_identity_']").size() === 0) {
+            $('#identities').fadeOut();
+            $('#no_identities').fadeIn();
+          }
+        } else {
+          $('div.success').fadeOut();
+          $('div.error').html("Identity has not been removed.");
+          $('div.error').fadeIn();
+        }
+      }
+    });
+  };

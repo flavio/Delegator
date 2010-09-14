@@ -1,0 +1,12 @@
+%h1 Invitation details
+
+%ul
+  %li
+    %strong email:
+    = @invite.email
+  %li
+    %strong status:
+    - if @invite.invited?
+      = link_to 'invited', redeem_invitation_url(@invite.invite_code)
+    - else
+      = link_to 'invite', send_invitation_path(@invite), :confirm => 'Send invitation?', :method => :post
