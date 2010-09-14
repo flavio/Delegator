@@ -13,7 +13,7 @@
           %td= link_to invite.email, :action => :show, :id => invite.id
           %td
             - if invite.invited?
-              Invited
+              = link_to 'invited', redeem_invitation_url(invite.invite_code)
             - else
               = link_to 'Invite', send_invitation_path(invite), :confirm => 'Send invitation?', :method => :post
 

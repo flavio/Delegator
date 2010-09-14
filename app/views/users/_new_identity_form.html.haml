@@ -5,8 +5,11 @@
     %fieldset
       %legend Add new identity
       - fields_for :identity do |identity|
-        %label{:for=>"name"} Name:
-        = identity.text_field :name
-        %label{:for=>"openid_url"} Real openid:
-        = identity.text_field :openid_url
+        %ol
+          %li
+            %label{:for=>"name"} Name:
+            = identity.text_field :name
+          %li
+            %label{:for=>"openid_url"} Real openid:
+            = identity.text_field :openid_url
       = submit_tag "Add"

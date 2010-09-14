@@ -3,8 +3,10 @@
 - form_for(@invite) do |f|
   = f.error_messages
   %fieldset
-    = f.label :email, "Email:"
-    = f.text_field :email
-  = f.submit "Invite"
+    %ol
+      %li
+        = f.label :email, "Email:"
+        = f.text_field :email
+    = f.submit "Invite"
 
 = link_to 'Back', invites_path
