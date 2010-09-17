@@ -1,0 +1,17 @@
+%h2 Sign in
+%div
+  - form_for :session, :url => session_path do |form|
+    %fieldset
+      %ol
+        %li
+          %label{:for=> 'email'} Email:
+          = form.text_field :email
+        %li
+          %label{:for=> 'password'} Password:
+          = form.password_field :password
+    = submit_tag "Sign in"
+
+%br
+%ul
+  %li= link_to "Sign up", sign_up_path
+  %li= link_to "Forgot password?", new_password_path
