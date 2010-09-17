@@ -1,5 +1,5 @@
 class InvitesController < ApplicationController
-  before_filter :access_for_admin, :except => [:new, :create] 
+  before_filter :access_for_admin
 
   # GET /invites
   # GET /invites.xml

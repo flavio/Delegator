@@ -1,5 +1,7 @@
 class UsersController < Clearance::UsersController
   include OpenidInspector
+  before_filter :authenticate, :only => [:add_identity, :del_identity]
+  before_filter :access_for_admin, :only => [:index, :show]
 
   # Override and add in a check for invitation code
   def create
@@ -45,7 +47,9 @@ class UsersController < Clearance::UsersController
 
   def add_identity
     user = User.find_by_id(params[:user_id])
+
     reply = {:status => true}
+
     if user != current_user
       reply[:status] = false
       reply[:errors] = [["User error", ""]]
@@ -59,34 +63,42 @@ class UsersController < Clearance::UsersController
         identity.openid_delegate = reply[:openid_delegate]
         if identity.save
           reply[:status] = true
-          reply[:html] = render_to_string({ :partial => "identity_row",
+          reply[:html] =  "<tr id='tr_identity_#{identity.id}' "
+          reply[:html] += "class='#{user.identities.size % 2 != 0 ? 'odd' : 'even'}'>"
+          reply[:html] += render_to_string({:partial => "identity_row",
                                             :layout => false,
                                             :locals => {:identity => identity}})
+          reply[:html] += "</tr>"
         else
           reply[:status] = false
           reply[:errors] = identity.errors
         end
       end
-    end
 
-    render :json => reply.to_json
+      render :json => reply.to_json
+    end
   end
 
   def del_identity
-    user = current_user
+    user = User.find_by_id(params[:user_id])
     reply = {}
 
-    identity = Identity.find_by_id(params[:id])
-    if identity.nil?
+    if user != current_user
       reply[:status] = false
-      reply[:error_message] = "Cannot find identity."
-    elsif !user.identities.include?(identity)
-      reply[:status] = false
-      reply[:error_message] = "Authorization error."
+      reply[:errors] = [["User error", ""]]
     else
-      user.identities.delete(identity)
-      identity.destroy
-      reply[:status] = true
+      identity = Identity.find_by_id(params[:id])
+      if identity.nil?
+        reply[:status] = false
+        reply[:error_message] = "Cannot find identity."
+      elsif !user.identities.include?(identity)
+        reply[:status] = false
+        reply[:error_message] = "Authorization error."
+      else
+        user.identities.delete(identity)
+        identity.destroy
+        reply[:status] = true
+      end
     end
     
     render :json => reply.to_json

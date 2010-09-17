@@ -1,5 +1,5 @@
 class IdentitiesController < ApplicationController
-  before_filter :authenticate, :only => [:edit]
+  before_filter :authenticate, :only => [:edit, :update]
   include OpenidInspector
 
   def show_by_username
