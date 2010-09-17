@@ -10,12 +10,12 @@
     %tbody
       - @invites.each do |invite|
         %tr{:class => cycle("odd", "even")}
-          %td= link_to invite.email, :action => :show, :id => invite.id
+          %td= link_to invite.email, invite.user
           %td
             - if invite.invited?
               = link_to 'invited', redeem_invitation_url(invite.invite_code)
             - else
-              = link_to 'Invite', send_invitation_path(invite), :confirm => 'Send invitation?', :method => :post
+              = link_to 'Not invite yet', send_invitation_path(invite), :confirm => 'Send invitation?', :method => :post
 
 = will_paginate @invites
 
