@@ -8,9 +8,7 @@ module OpenidInspector
         reply[:errors] = [["Error while contacting your openid server",
                            "cannot find openid.server value"]]
       elsif doc.css('head > link[@rel="openid.delegate"]').empty?
-        reply[:status] = false
-        reply[:errors] = [["Error while contacting your openid server",
-                           "cannot find openid.server value"]]
+        reply[:openid_delegate] =  url
       else
         reply[:openid_delegate] =  doc.css('head > link[@rel="openid.delegate"]').first.attributes["href"].to_s
         reply[:openid_server] =  doc.css('head > link[@rel="openid.server"]').first.attributes["href"].to_s
