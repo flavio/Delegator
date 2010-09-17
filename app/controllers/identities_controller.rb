@@ -8,7 +8,7 @@ class IdentitiesController < ApplicationController
 
     @identity = Identity.find_by_name @username
     if @identity.nil?
-      render "nothing", :status => 404
+      render :nothing
     else
       respond_to do |format|
         format.html

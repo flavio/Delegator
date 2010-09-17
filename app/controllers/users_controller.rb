@@ -6,7 +6,11 @@ class UsersController < Clearance::UsersController
   # Override and add in a check for invitation code
   def create
     @user = User.new params[:user]
-    invite_code = params[:invite][:invite_code]
+    if params.has_key?(:invite) && params[:invite].has_key?(:invite_code)
+      invite_code = params[:invite][:invite_code]
+    else
+      invite_code = nil
+    end
     @invite = Invite.find_redeemable(invite_code)
 
     if invite_code && @invite
@@ -22,7 +26,7 @@ class UsersController < Clearance::UsersController
       end
     else
       flash.now[:notice] = "Sorry, that code is not redeemable"
-      render :action => "new"
+      redirect_to root_path
     end
   end
 
@@ -74,9 +78,9 @@ class UsersController < Clearance::UsersController
           reply[:errors] = identity.errors
         end
       end
-
-      render :json => reply.to_json
     end
+
+    render :json => reply.to_json
   end
 
   def del_identity
