@@ -1,0 +1,146 @@
+HTTP/1.1 200 OK
+Date: Fri, 17 Sep 2010 10:10:06 GMT
+Server: Apache/2.2
+Content-Length: 3527
+Content-Type: text/html; charset=UTF-8
+X-XRDS-Location: http://flavio.castelli.myopenid.com/?xrds=1
+Set-Cookie: browser_id=80754173d6b183d531270fc32f3d965eb4c4b9f09da389dce1bad77fc382a351; domain=myopenid.com; path=/; expires=Sat, 17-Sep-2011 10:10:06 GMT
+P3P: CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"
+Connection: close
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head >
+        <title>
+  Flavio Castelli
+</title>
+
+<link rel="stylesheet"
+      href="http://www.myopenid.com/static/reset-fonts-grids-base.css"
+      type="text/css">
+<link rel="stylesheet"
+      href="http://www.myopenid.com/static/screen.css"
+      type="text/css">
+
+<link rel="openid.server" href="http://www.myopenid.com/server" />
+<link rel="openid2.provider" href="http://www.myopenid.com/server" />
+<link rel="stylesheet" href="http://www.myopenid.com/static/idpages/idpage.css" />
+
+<link rel="pavatar" href="http://www.myopenid.com/image?id=153318" />
+<link rel="avatar" href="http://www.myopenid.com/image?id=153318" />
+
+<script type="text/javascript">
+function imageUploadHandler(submit_button_id) {
+  submit_button = document.getElementById(submit_button_id);
+  submit_button.disabled = false;
+}
+</script>
+
+  </head>
+  <body >
+    
+
+<div id="doc">
+   <div id="hd">
+    <div class="signin">
+        Get your own OpenID. It's free!
+        <a href="https://www.myopenid.com/signup">Register</a>
+        | <a href="https://www.myopenid.com/signin">Sign in</a>
+    </div>
+    <div class="logo">
+      <a href="http://www.myopenid.com/">
+        
+        <img style="margin-top: 1em;" alt="myOpenID - The free, secure OpenID server " src="/static/images/new_myopenid_logo_header_small.png" />
+      </a>
+    </div>
+</div>
+   <div id="bd">
+    
+  <div class="yui-t1 vcard">
+    <div id="yui-main">
+      <div class="yui-b" id="profile_container">
+        <span class="uid" style="display: none">http://flavio.castelli.myopenid.com/</span>
+
+        <div id="fullname_container">
+
+        <h1 id="display_fullname" onclick="edit_fullname();" class="fn n" 
+>
+          <span class="given-name">Flavio</span>
+          <span class="additional-name">Castelli</span>
+          <span class="family-name"></span>
+        </h1>
+
+        </div>
+
+        <div id="about_me">
+          
+  <div id="display_contact" onclick="edit_contact();" class="yui-g section" 
+>
+    <div class="yui-u first">
+      <div id="professional_data">
+        <div class="title">Software engineer</div>
+
+        <div class="org">Novell</div>
+      </div>
+
+    </div>
+    <div class="yui-u">
+      <table>
+        <tr>
+          <th>E-mail</th>
+          <td class="email">flavio@castelli.name</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+        </div>
+
+        <div id="display_blurb" onclick="edit_blurb();" class="section" 
+>
+          <p class="note">Linux lover, KDE hacker and ruby enthusiast.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar" class="yui-b">
+      <div class="section">
+          <img class="photo" src="http://www.myopenid.com/image?id=153318">
+      </div>
+
+      <div class="section">
+        <a id="vcard_link" href="http://flavio.castelli.myopenid.com/?vcard=1">
+          Download my vCard
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+   <div id="ft"><p class="fl">
+  <a href="https://www.myopenid.com/help">Help</a> |
+  <a href="https://www.myopenid.com/privacy">Privacy</a>
+
+      
+    | Language: <a href="https://www.myopenid.com/set_language">Not set</a>
+</p>
+
+<p class="fr">
+  <a href="http://blog.janrain.com/">Blog</a> |
+  <a href="http://janrain.com/background/">About Us</a> |
+  &copy; 2008 <a href="http://janrain.com/">JanRain, Inc.</a>
+  <br />
+  myOpenID&trade; and the myOpenID&trade; website are
+     trademarks of JanRain, Inc.
+</p>
+</div>
+</div>
+
+
+
+
+
+  </body>
+</html>
