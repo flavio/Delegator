@@ -1,0 +1,88 @@
+#no_identities{:style => (identities.empty? ? "" : "display:none;")}
+  %p No openid identity to show.
+
+%table#identities{:style => (identities.empty? ? "display:none;" : "")}
+  %thead
+    %tr
+      %th Name
+      %th Real openid
+      %th Action
+  %tbody
+    - identities.each do |identity|
+      %tr{:id => "tr_identity_#{identity.id}", :class => cycle("odd", "even")}
+        = render :partial => "users/identity_row", :layout => false, :locals => {:identity => identity}
+
+= will_paginate identities
+
+#identity_operation_message{:style=>"display:none;"}
+= render :partial => "users/new_identity_form"
+
+:javascript
+  $(document).ready(function(){
+    $("form#submit").submit(function() {
+    // we want to store the values from the form input box, then send via ajax below
+    var url   = $('#identity_openid_url').attr('value');
+    var name = $('#identity_name').attr('value');
+    $.ajax({
+      type: "POST",
+      url: '#{url_for(:controller => :users, :action => :add_identity)}',
+      data: {"identity[openid_url]" : url,
+             "identity[name]": name,
+             "user_id": #{@user.id},
+             "authenticity_token": '#{form_authenticity_token}'},
+      success: function(data){
+        if(data.status) {
+          $('#identity_operation_message').fadeOut();
+          $('#identity_operation_message').html("Identity <em>" + name + "</em> has been added.");
+          $('#identity_operation_message').toggleClass('success', true);
+          $('#identity_operation_message').toggleClass('error', false);
+          $('#identity_operation_message').fadeIn();
+          $('#no_identities').fadeOut();
+          $('#identities').fadeIn();
+          $('#identities > tbody:last').append(data.html);
+        } else {
+          $('#identity_operation_message').fadeOut();
+          $('#identity_operation_message').html("<p>Identity has not been added:</p><ul>");
+          jQuery.each(data.errors, function(i,item){
+            $('#identity_operation_message').append("<li>" + item[0] + " " + item[1] + "</li>");
+          });
+          $('#identity_operation_message').append("</ul>");
+          $('#identity_operation_message').toggleClass('success', false);
+          $('#identity_operation_message').toggleClass('error', true);
+          $('#identity_operation_message').fadeIn();
+        }
+      }
+    });
+    return false;
+    });
+  });
+
+  function delete_identity(identity_id) {
+    $.ajax({
+      type: "POST",
+      url: '#{url_for(:controller => :users, :action => :del_identity)}',
+      data: {"id" : identity_id,
+             "user_id": #{@user.id},
+             "authenticity_token": '#{form_authenticity_token}'},
+      success: function(data){
+        if(data.status) {
+          $('#identity_operation_message').fadeOut();
+          $('#identity_operation_message').html("Identity has been removed.");
+          $('#identity_operation_message').toggleClass('success', true);
+          $('#identity_operation_message').toggleClass('error', false);
+          $('#identity_operation_message').fadeIn();
+          $('#tr_identity_'+identity_id).fadeOut().remove();
+          if ($("tr[id ^='tr_identity_']").size() === 0) {
+            $('#identities').fadeOut();
+            $('#no_identities').fadeIn();
+          }
+        } else {
+          $('#identity_operation_message').fadeOut();
+          $('#identity_operation_message').html("Identity has not been removed.");
+          $('#identity_operation_message').toggleClass('success', false);
+          $('#identity_operation_message').toggleClass('error', true);
+          $('#identity_operation_message').fadeIn();
+        }
+      }
+    });
+  };
