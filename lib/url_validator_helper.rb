@@ -46,6 +46,8 @@ module UrlValidatorHelper
         begin
           uri = URI.parse(value)
 
+          raise(URI::InvalidURIError) if uri.to_s.empty?
+
           if !allowed_schemes.include?(uri.scheme)
             raise(URI::InvalidURIError)
           end
