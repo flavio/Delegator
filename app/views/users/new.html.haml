@@ -7,10 +7,10 @@
         = form.label :email, "Email:"
         = form.text_field :email
       %li
-        = form.label :password, "Passowrd:"
+        = form.label :password, "Password:"
         = form.password_field :password
       %li
-        = form.label :password_confirmation, "Passowrd confirmation:"
+        = form.label :password_confirmation, "Password confirmation:"
         = form.password_field :password_confirmation
   - fields_for :invite do |invite|
     = invite.hidden_field :invite_code, :value => @invite_code
