@@ -1,6 +1,7 @@
 %h1 Delegator
 - if current_user.nil?
-  %p lorem ipsum
+  = @explaination
+
 - else
   %h2 Your identities
   = render :partial => "users/identities", :layout => false, :locals => {:identities => @identities}

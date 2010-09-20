@@ -45,6 +45,7 @@ Rails::Initializer.run do |config|
   config.gem "compass", :version => ">= 0.10.5"
   config.gem "nokogiri"
   config.gem 'will_paginate', '>= 2.3.11'
+  config.gem "RedCloth"
 end
 
 require 'open-uri'

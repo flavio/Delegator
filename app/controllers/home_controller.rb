@@ -19,6 +19,9 @@
 
 class HomeController < ApplicationController
   def index
+    @explaination = Rails.cache.fetch("EXPLAINATION") do
+      RedCloth.new(File.read(RAILS_ROOT+"/README.textile")).to_html
+    end
     unless current_user.nil?
       @user = current_user
       @identities = @user.identities.paginate :page => params[:page], :order => 'created_at DESC'
