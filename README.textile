@@ -1,0 +1,19 @@
+Delegator allows you to have infinite openid identities.
+
+h2. How it works
+
+A step-by-step guide:
+* Get an invitation
+* Register a new account
+* Pickup an alias and associate a real openid identity to it
+* Use _http://delegator_url/openid/alias_ as openid identity.
+* Get infinite openid identities using the following url:_http://delegator_url/openid/alias+a_number_
+
+h3. A small example
+
+Suppose you registered the alias '_foo_'
+The following urls are all valid openid identities:
+* _http://delegator_url/openid/foo_
+* _http://delegator_url/openid/foo+1_
+* _http://delegator_url/openid/foo+2_
+* ... and so on...
