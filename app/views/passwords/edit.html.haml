@@ -1,0 +1,14 @@
+%h2 Change your password
+
+%p Your password has been reset. Choose a new password below.
+- form_for(:user, :url  => user_password_path(@user, :token => @user.confirmation_token), :html => { :method => :put }) do |form|
+  = form.error_messages
+  %fieldset
+    %ol
+      %li
+        %label{:for=>'password'}Choose password:
+        = form.password_field :password
+      %li
+        %label{:for=>'password_confirmation'}Confirm password:
+        = form.password_field :password_confirmation
+  = form.submit "Save this password"
