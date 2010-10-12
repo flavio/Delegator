@@ -21,25 +21,43 @@ require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
   context "on GET :index" do
+    setup do
+      puts "global setup"
+    end
+    
+    teardown do
+      puts "global teardown"
+    end
+
     context "user not logged" do
-      should "not show identities" do
+      setup do
+        puts "local setup"
         get :index
-        assert_response :success
-        assert_nil assigns(:user)
-        assert_nil assigns(:identities)
       end
+
+      teardown do
+        puts "local teardown"
+      end
+
+      should respond_with :success
+      should render_template(:index)
+      should_not assign_to(:users)
+      should_not assign_to(:identities)
     end
 
     context "user logged in" do
-      should "not show identities" do
-        user = Factory(:email_confirmed_user)
-        5.times { user.identities << Factory(:identity) }
-        sign_in_as(user)
-
+      setup do
+        @user = Factory(:email_confirmed_user)
+        5.times { @user.identities << Factory(:identity) }
+        sign_in_as(@user)
         get :index
+      end
+
+      should assign_to(:user) 
+      should "not show identities" do
         assert_response :success
-        assert_equal user, assigns(:user)
-        assert_same_elements(user.identities, assigns(:identities))
+        assert_equal @user, assigns(:user)
+        assert_same_elements(@user.identities, assigns(:identities))
       end
     end
   end
